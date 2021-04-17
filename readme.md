@@ -1,4 +1,4 @@
-# Travis CI example [![Build Status](https://travis-ci.com/montoyadamien/TravisCI_example.svg?branch=main)](https://travis-ci.com/montoyadamien/TravisCI_example)
+# Travis CI example [![Build Status](https://travis-ci.com/montoyadamien/TravisCI_example.svg?branch=master)](https://travis-ci.com/montoyadamien/TravisCI_example)
 
 This repository aims to show how to use the continuous integration tool Travis CI to launch some database tests. 
 The project example works with NestJS and Redis. 
