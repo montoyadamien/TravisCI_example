@@ -1,0 +1,46 @@
+language: node_js # specify node_js as the build language
+
+node_js:
+  - 14 # specify node_js version
+
+branches: # here we can specify which branches will be used during jobs
+  only:
+    - master
+
+services:
+  - docker # indicate that we will use the docker service
+
+env: # declare some env vars
+  DOCKER_COMPOSE_VERSION=1.29.1
+  HOME=/home/travis/build/montoyadamien/TravisCI_example/
+
+# install the last docker-compose package
+# also install the latest docker version
+# for more information about travis lifecycle see https://docs.travis-ci.com/user/job-lifecycle/
+before_install:
+  - sudo apt-get update
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+
+install:
+  - cd ${HOME}plant
+  - npm install
+  - cd ${HOME}tree
+  - npm install
+
+before_script:
+  - docker-compose up -d --build
+
+script:
+  - cd ${HOME}plant
+  - npm run test
+  - npm run test:e2e
+  - cd ${HOME}tree
+  - npm run test
+  - npm run test:e2e

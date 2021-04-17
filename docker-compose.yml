@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  plant:
+    build: ./plant
+    image: garden/plant
+    restart: unless-stopped
+    container_name: plant
+    environment:
+      - REDIS=redis:6379
+    volumes:
+      - ./plant/src/:/app/src/ # FOR HOT RELOAD ONLY
+    depends_on:
+      - redis
+
+  tree:
+    build: ./tree
+    image: garden/tree
+    restart: unless-stopped
+    container_name: tree
+    environment:
+      - REDIS=redis:6379
+    volumes:
+      - ./tree/src/:/app/src/ # FOR HOT RELOAD ONLY
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
