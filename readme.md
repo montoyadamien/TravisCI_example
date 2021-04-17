@@ -3,7 +3,7 @@
 This repository aims to show how to use the continuous integration tool Travis CI to launch some database tests. 
 The project example works with NestJS and Redis. 
 First we have two NodeJs services, Plant and Tree using Redis for database access. 
-Pushing on the repository will trigger the Travis CI builds defined [here](travis.yml).
+Pushing on the repository will trigger the Travis CI builds defined [here](./.travis.yml).
 
 ## Technologies
 
